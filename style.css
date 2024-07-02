@@ -12,12 +12,24 @@ body {
 .tab-area {
   border-bottom: 1px solid lightgray;
   display: flex;
+  position: relative;
+}
+#under-line {
+  height: 4px;
+  background-color: lightgray;
+  position: absolute;
+  width: 70px;
+  left: 0px;
+  top: 40px;
 }
 #tab{
+  width: 70px;
   padding: 10px;
+  text-align: center;
 }
 .task {
   display: flex;
   justify-content: space-between;
+  margin-left: 20px;
 }
 /* margin-right: 10px; */
