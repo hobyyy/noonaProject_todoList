@@ -16,7 +16,7 @@ body {
 #tab{
   padding: 10px;
 }
-.list {
+.task {
   display: flex;
   justify-content: space-between;
 }
