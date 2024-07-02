@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+}
+#user-input {
+  width: 20vw;
+}
+.context {
+  border: 1px solid lightgray;
+  min-height: 80vh;
+  margin-top: 20px;
+}
+.tab-area {
+  border-bottom: 1px solid lightgray;
+  display: flex;
+}
+#tab{
+  padding: 10px;
+}
+.list {
+  display: flex;
+  justify-content: space-between;
+}
+/* margin-right: 10px; */
