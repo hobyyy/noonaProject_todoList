@@ -9,6 +9,9 @@ body {
   min-height: 80vh;
   margin-top: 20px;
 }
+.todo-finish {
+  text-decoration: line-through;
+}
 .tab-area {
   border-bottom: 1px solid lightgray;
   display: flex;
@@ -30,6 +33,14 @@ body {
 .task {
   display: flex;
   justify-content: space-between;
-  margin-left: 20px;
+  padding-left: 20px;
 }
-/* margin-right: 10px; */
+.backgroud-gray {
+  background-color: lightgray;
+}
+.icon-size {
+  font-size: x-large;
+}
+/* .icon-padding {
+  padding: 5px 0;
+} */
