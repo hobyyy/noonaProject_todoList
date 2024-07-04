@@ -32,6 +32,10 @@ userInput.addEventListener("keypress", function(e) {
 });
 for(let i=0;i<tabs.length;i++) {
   tabs[i].addEventListener("click", filter);
+  // tabs[i].addEventListener("click", function(e) {
+  //   if(t)
+  //   console.log(e)
+  // });
 }
 
 userInput.addEventListener("focus", function() {userInput.value = "";})
@@ -60,7 +64,7 @@ function render(list) {
   console.log('list1 : ', list)
   for(let i=0;i<list.length;i++) {
     if(list[i].isComplete == true) {
-      resultHTML += `<div class="task backgroud-gray">
+      resultHTML += `<div class="task">
         <div class="todo-finish">${list[i].todoContent}</div>
         <div>
           <i class="fa-regular fa-square-check icon-size" onClick = "finishTodo('${list[i].id}')"></i>
@@ -80,36 +84,13 @@ function render(list) {
   }
   document.getElementById("task-board").innerHTML = resultHTML;
 }
-// function render() {
-//   let resultHTML = '';
-//   // console.log('todoList')
-//   for(let i=0;i<todoList.length;i++) {
-//     if(todoList[i].isComplete == true) {
-//       resultHTML += `<div class="task backgroud-gray">
-//         <div class="todo-finish">${todoList[i].todoContent}</div>
-//         <div>
-//           <i class="fa-regular fa-square-check icon-size" onClick = "finishTodo('${todoList[i].id}')"></i>
-//           <i class="fa-solid fa-square-xmark icon-size" onClick = "deleteTodo('${todoList[i].id}')"></i>
-//           </div>
-//           </div>`
-//         }else {
-//           resultHTML += `<div class="task">
-//           <div>${todoList[i].todoContent}</div>
-//           <div>
-//           <i class="fa-regular fa-square icon-size" onClick = "finishTodo('${todoList[i].id}')"></i>
-//           <i class="fa-solid fa-square-xmark icon-size" onClick = "deleteTodo('${todoList[i].id}')"></i>
-//         </div>
-//       </div>`
-//     }
 
-//   }
-//   document.getElementById("task-board").innerHTML = resultHTML;
-// }
 
 function filter(event) {
   let ongoningList = [];
   let finishList = [];
   mode = event.target.id;
+  tabClick(event, mode);  // tabClick 이벤트 여기서 처리
   if(mode === "all"){
     return render(todoList);
   }else if(mode === "ongoing"){   // 진행중 
@@ -130,7 +111,14 @@ function filter(event) {
     return render(finishList);
   }
 }
-
+function tabClick(event, mode) {  // tab click event 처리함수
+  event.target.style.color = "white";
+  for(let i=0;i<tabs.length;i++) {
+    if(tabs[i].id !== mode) {
+      tabs[i].style.color = "black";
+    }
+  }
+}
 function finishTodo(id) {
   console.log('id : ', id)
   for(let i=0;i<todoList.length;i++){
@@ -158,7 +146,7 @@ function randomIDGenerate() { // random ID 생성하는 함수
   return '_' + Math.random().toString(36).substr(2, 9);
 }
 
-function getToday(){
+function getToday(){  // 오늘 날짜 2024.07.04 Thu
   let date = new Date();
   let year = date.getFullYear();
   let month = ("0" + (1 + date.getMonth())).slice(-2);
