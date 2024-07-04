@@ -1,8 +1,21 @@
 body {
   margin: 0;
+  background-image: url(https://i.pinimg.com/originals/f6/ef/4b/f6ef4bb56374cb5c7fe3e0ed89b74a27.jpg);
+  background-position-x : -500px; 
+  font-family: 'omyu_pretty';
+  display: flex;
+  align-items: flex-end;
+}
+.container {
+  width: 30vw;
+  margin-right: 150px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
 }
 #user-input {
-  width: 20vw;
+  width: 25vw;
 }
 .context {
   border: 1px solid lightgray;
@@ -25,10 +38,11 @@ body {
   left: 0px;
   top: 40px;
 }
-#tab{
+.tab-area div{
   width: 70px;
   padding: 10px;
   text-align: center;
+  cursor: pointer;
 }
 .task {
   display: flex;
@@ -44,3 +58,9 @@ body {
 /* .icon-padding {
   padding: 5px 0;
 } */
+@font-face {
+  font-family: 'omyu_pretty';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
