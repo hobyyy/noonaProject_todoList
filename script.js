@@ -2,47 +2,27 @@ let userInput = document.getElementById("user-input");
 let inputButton = document.getElementById("input-button");
 let tabs = document.querySelectorAll(".tab-area div")
 let date = document.getElementById("date");
-let darkMode = document.getElementById("dark-mode");
-let lightMode = document.getElementById("light-mode");
 date.innerHTML = getToday();
-console.log('darkMode.innerHTML : ', darkMode.outerHTML )
-let darkModeEnabled = false;
-
-
-darkMode.addEventListener("click", function() {
-  darkModeEnabled = !darkModeEnabled;
-  if (darkModeEnabled) {
-    darkMode.outerHTML = `<i id="dark-mode" class="fa-regular fa-moon"></i>`
-  } else {
-    lightMode.outerHTML = `<i id="light-mode" class="fa-solid fa-sun"></i>`
-  }
-  applyDarkMode(darkModeEnabled);
-});
-
-
+let mode = 'all';
 
 
 inputButton.addEventListener("click", addTodo);
-// darkMode.addEventListener("click", changeDarkmode);
 userInput.addEventListener("keypress", function(e) { 
   if(e.key === "Enter") {  // 엔터누를때
-    // console.log('value : ', !userInput.value)
     addTodo();
   }   
 });
 for(let i=0;i<tabs.length;i++) {
-  tabs[i].addEventListener("click", filter);
-  // tabs[i].addEventListener("click", function(e) {
-  //   if(t)
-  //   console.log(e)
-  // });
+  tabs[i].addEventListener("click", tabClick)
 }
 
 userInput.addEventListener("focus", function() {userInput.value = "";})
 let todoList = [];
+let ongoningList = [];
+let finishList = [];
+
 
 function addTodo() {
-  // console.log('값1',userInput.value)
   if(!userInput.value) {  // 값을 입력하지 않았을 때
     alert( '값을 입력해주세요' );
     return;
@@ -53,13 +33,20 @@ function addTodo() {
     isComplete : false,
   }
   todoList.push(todo);
-  // console.log('todo : ', todo)
   userInput.value = "";
   
-  render(todoList);
+  filter();
 }
 
-function render(list) {
+function render() {
+  console.log('mode###', mode)
+  let list = [];
+  if(mode === "all") {
+    list = todoList;
+  }else{
+    list = filterList;
+  }
+
   let resultHTML = '';
   console.log('list1 : ', list)
   for(let i=0;i<list.length;i++) {
@@ -80,44 +67,43 @@ function render(list) {
         </div>
       </div>`
     }
-
   }
   document.getElementById("task-board").innerHTML = resultHTML;
 }
 
 
 function filter(event) {
-  let ongoningList = [];
-  let finishList = [];
-  mode = event.target.id;
-  tabClick(event, mode);  // tabClick 이벤트 여기서 처리
+  if(event) {
+    mode = event.target.id;
+  }
+  filterList  = [];
   if(mode === "all"){
-    return render(todoList);
+    return render();
   }else if(mode === "ongoing"){   // 진행중 
-    console.log('mode : ',mode)
     for(i=0;i<todoList.length;i++){
       if(todoList[i].isComplete === false){   
-        ongoningList.push(todoList[i]);
+        filterList.push(todoList[i]);
       }
     }  
-    return render(ongoningList);
+    return render();
   }else if(mode === "finish"){    // 완료 
-    console.log('mode : ',mode)
     for(i=0;i<todoList.length;i++){
       if(todoList[i].isComplete === true){   
-        finishList.push(todoList[i]);
+        filterList.push(todoList[i]);
       }
     }
-    return render(finishList);
+    return render();
   }
 }
-function tabClick(event, mode) {  // tab click event 처리함수
+function tabClick() {  // tab click event 처리함수
   event.target.style.color = "white";
+  mode = event.target.id
   for(let i=0;i<tabs.length;i++) {
     if(tabs[i].id !== mode) {
       tabs[i].style.color = "black";
     }
   }
+  filter()
 }
 function finishTodo(id) {
   console.log('id : ', id)
@@ -128,7 +114,7 @@ function finishTodo(id) {
     }
   }
   console.log('todoList : ',todoList)
-  render(todoList);
+  filter();
 }
 function deleteTodo(id) {
   console.log('id : ', id)
@@ -139,7 +125,7 @@ function deleteTodo(id) {
     }
   }
   console.log('todoList : ',todoList)
-  render(todoList);
+  filter();
 }
 
 function randomIDGenerate() { // random ID 생성하는 함수
@@ -152,23 +138,5 @@ function getToday(){  // 오늘 날짜 2024.07.04 Thu
   let month = ("0" + (1 + date.getMonth())).slice(-2);
   let day = ("0" + date.getDate()).slice(-2);
   let week = date.toString().slice(0, 3);
-
   return year + "." + month + "." + day + " " + week;
-}
-
-function changeDarkmode() {
-  console.log('hello')
-}
-
-
-
-
-function applyDarkMode(enabled) {
-    if (enabled) {
-        document.body.classList.add("dark-mode"); // ダークモードクラスを追加
-        document.body.classList.remove("light-mode"); // ライトモードクラスを削除
-    } else {
-        document.body.classList.add("light-mode"); // ライトモードクラスを追加
-        document.body.classList.remove("dark-mode"); // ダークモードクラスを削除
-    }
 }
